@@ -13,17 +13,41 @@ sample_count = int(args.get("sample_size")) if args.get("sample_size") else 200
 
 extensions = (".txt",".pdf",".jpeg",".jpg",".png",".gid",".tiff")
 
-def has_files():
-    pass
+def has_files(dir_path):
+    files = [file for file in os.listdir(dir_path) 
+        if file.endswith(extensions)]
 
-def is_valid():
-    pass
+    if len(files) > 0:
+        return True
+    return False
+    
 
-def copy_samples():
-    pass
+def is_valid(root_dir):
+    valid_dirs = set()
+    for root, dirs, files in os.walk(root_dir, topdown=False):
+        valid = has_files(root)
+
+        if valid:
+            valid_dirs.add(root)
+
+    return valid_dirs
+
+def copy_samples(directory):
+    rootname = directory.split("/")[0]
+    output_dir = directory.replace(rootname, "samples")
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+
+    for file in os.listdir(directory)[:sample_count]:
+        shutil.copy(os.path.join(directory, file), output_dir)
 
 def start():
-    pass
+    valid_dirs = is_valid(rootdir)
+
+    for directory in valid_dirs:
+        copy_samples(directory)
 
 if __name__ == "__main__":
     start()
