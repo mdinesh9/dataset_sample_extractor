@@ -7,4 +7,4 @@ My root_dir has training and holdout datasets
 
 ### Why
     - Developed this script for deep learning projects when you have huge dataset.
-    - No point of running deep learning models on complete dataset when you are in development phase.
+    - No point of running deep learning models on complete dataset when you are prototyping.
